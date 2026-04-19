@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 
-// route for database 
+// route for database (post request) 
 app.post("/jobs", (req, res) => {
   const { company, role, status, date_applied, notes } = req.body;
 
@@ -36,6 +36,56 @@ app.post("/jobs", (req, res) => {
     }
   });
 });
+
+// for the get query 
+app.get("/jobs", (req, res) => {
+  const sql = "SELECT * FROM jobs";
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).send("Error fetching jobs");
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+
+// this allows you to change the job status 
+app.put("/jobs/:id", (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const sql = "UPDATE jobs SET status = ? WHERE id = ?";
+
+  db.query(sql, [status, id], (err, result) => {
+    if (err) {
+      console.error("Error updating job:", err);
+      res.status(500).send("Error updating job");
+    } else {
+      res.send("Job updated successfully ✅");
+    }
+  });
+});
+
+
+// can delete jobs with this method 
+app.delete("/jobs/:id", (req, res) => {
+  const { id } = req.params;
+
+  const sql = "DELETE FROM jobs WHERE id = ?";
+
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("Error deleting job:", err);
+      res.status(500).send("Error deleting job");
+    } else {
+      res.send("Job deleted successfully 🗑️");
+    }
+  });
+});
+
 
 // port 
 const PORT = 5000;
