@@ -30,10 +30,14 @@ app.post("/jobs", (req, res) => {
   db.query(sql, [company, role, status, date_applied, notes], (err, result) => {
     if (err) {
       console.error("Error inserting data:", err);
-      res.status(500).send("Error adding job");
+      res.status(500).json({ error: "Something went wrong" });
     } else {
-      res.send("Job added successfully");
+      res.json({ message: "Job added successfully" });
     }
+
+    if (!company || !role) {
+      return res.status(400).json({ error: "Company and role are required" });
+}
   });
 });
 
@@ -44,7 +48,7 @@ app.get("/jobs", (req, res) => {
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching data:", err);
-      res.status(500).send("Error fetching jobs");
+      res.status(500).json({ error: "Something went wrong" });
     } else {
       res.json(results);
     }
@@ -62,9 +66,9 @@ app.put("/jobs/:id", (req, res) => {
   db.query(sql, [status, id], (err, result) => {
     if (err) {
       console.error("Error updating job:", err);
-      res.status(500).send("Error updating job");
+     res.status(500).json({ error: "Something went wrong" });
     } else {
-      res.send("Job updated successfully ✅");
+     res.json({ message: "Job added successfully" });
     }
   });
 });
@@ -79,9 +83,9 @@ app.delete("/jobs/:id", (req, res) => {
   db.query(sql, [id], (err, result) => {
     if (err) {
       console.error("Error deleting job:", err);
-      res.status(500).send("Error deleting job");
+     res.status(500).json({ error: "Something went wrong" });
     } else {
-      res.send("Job deleted successfully 🗑️");
+      res.json({ message: "Job added successfully" });
     }
   });
 });
