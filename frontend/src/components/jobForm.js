@@ -8,7 +8,7 @@ import axios from "axios";
 import "./jobForm.css";
 
 // Core function: formData - holds the field values, setFormData - updates changes
-function JobForm() {
+function JobForm({ onJobAdded }) {
   const [formData, setFormData] = useState({
     company: "",
     role: "",
@@ -49,6 +49,9 @@ function JobForm() {
       );
 
       console.log("Success:", response.data);
+
+      // 🔥 VERY IMPORTANT: triggers refresh in JobList
+      onJobAdded();
 
       // clears the form after successful submission
       setFormData({
