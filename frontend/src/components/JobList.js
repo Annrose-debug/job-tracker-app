@@ -9,7 +9,6 @@ import "./JobList.css";
 
 // receiving refreshJobs from App so we know when to refetch data
 function JobList({ refreshJobs }) {
-
   // this state stores all the jobs fetched from the backend
   const [jobs, setJobs] = useState([]);
 
@@ -31,6 +30,41 @@ function JobList({ refreshJobs }) {
     }
   };
 
+  // function to update job status
+  const updateStatus = async (id, newStatus) => {
+    try {
+      // send PUT request to backend to update the status
+      await axios.put(`http://localhost:5000/jobs/${id}`, {
+        status: newStatus
+      });
+
+      // after updating, fetch jobs again so UI updates instantly
+      fetchJobs();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  // function to delete a job from the database
+  const deleteJob = async (id) => {
+    // asks for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this job?");
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      // send DELETE request to backend using the job id
+      await axios.delete(`http://localhost:5000/jobs/${id}`);
+
+      // fetch jobs again so the deleted job disappears from the UI
+      fetchJobs();
+    } catch (error) {
+      console.error("Error deleting job:", error);
+    }
+  };
+
   return (
     <section className="jobs-section">
       <h2>Applications</h2>
@@ -45,7 +79,6 @@ function JobList({ refreshJobs }) {
         <div className="jobs-list">
           {jobs.map((job) => (
             <div className="job-card" key={job.id}>
-
               {/* top section of the card (company + role + status) */}
               <div className="job-card-header">
                 <div>
@@ -53,10 +86,16 @@ function JobList({ refreshJobs }) {
                   <p>{job.role}</p>
                 </div>
 
-                {/* dynamic styling based on job status */}
-                <span className={`status-badge ${job.status.toLowerCase()}`}>
-                  {job.status}
-                </span>
+                {/* dropdown to update status directly from UI */}
+                <select
+                  value={job.status}
+                  onChange={(e) => updateStatus(job.id, e.target.value)}
+                >
+                  <option>Applied</option>
+                  <option>Interview</option>
+                  <option>Offer</option>
+                  <option>Rejected</option>
+                </select>
               </div>
 
               {/* display date (or fallback if no date) */}
@@ -66,6 +105,14 @@ function JobList({ refreshJobs }) {
 
               {/* only show notes if they exist */}
               {job.notes && <p className="job-notes">{job.notes}</p>}
+
+              {/* button to delete job from UI and database */}
+              <button
+                className="delete-btn"
+                onClick={() => deleteJob(job.id)}
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>
