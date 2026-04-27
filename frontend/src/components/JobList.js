@@ -12,6 +12,10 @@ function JobList({ refreshJobs }) {
   // this state stores all the jobs fetched from the backend
   const [jobs, setJobs] = useState([]);
 
+  // adding the search and filter state
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("All");
+
   // this runs when the component loads AND whenever refreshJobs changes
   // meaning: whenever a new job is added, it fetches again automatically
   useEffect(() => {
@@ -65,19 +69,65 @@ function JobList({ refreshJobs }) {
     }
   };
 
+  // this filters jobs based on the search input and selected status
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch =
+      job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.role.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesFilter =
+      filterStatus === "All" || job.status === filterStatus;
+
+    return matchesSearch && matchesFilter;
+  });
+
   return (
     <section className="jobs-section">
       <h2>Applications</h2>
 
-      {/* if no jobs exist, show a message */}
+      {/* stats section to show quick dashboard numbers */}
+      <div className="stats">
+        <div>Total: {jobs.length}</div>
+        <div>Applied: {jobs.filter((job) => job.status === "Applied").length}</div>
+        <div>Interview: {jobs.filter((job) => job.status === "Interview").length}</div>
+        <div>Offer: {jobs.filter((job) => job.status === "Offer").length}</div>
+        <div>Rejected: {jobs.filter((job) => job.status === "Rejected").length}</div>
+      </div>
+
+      {/* search and filter controls */}
+      <div className="controls">
+        <input
+          type="text"
+          placeholder="Search by company or role..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option>Applied</option>
+          <option>Interview</option>
+          <option>Offer</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      {/* if no jobs exist at all, show a message */}
       {jobs.length === 0 ? (
         <p className="empty-state">
           No applications yet. Add your first one above!
         </p>
+      ) : filteredJobs.length === 0 ? (
+        <p className="empty-state">
+          No applications match your search or filter.
+        </p>
       ) : (
-        // if jobs exist, display them as cards
+        // if jobs exist, display the filtered jobs as cards
         <div className="jobs-list">
-          {jobs.map((job) => (
+          {filteredJobs.map((job) => (
             <div className="job-card" key={job.id}>
               {/* top section of the card (company + role + status) */}
               <div className="job-card-header">
