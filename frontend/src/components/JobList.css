@@ -1,124 +1,99 @@
+/* ─────────────────────────────────────────────
+   JOBS SECTION WRAPPER
+   ───────────────────────────────────────────── */
 .jobs-section {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  margin-top: 24px;
+  background: var(--bg-surface);
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
 }
 
 .jobs-section h2 {
-  margin-bottom: 16px;
-  color: #111827;
+  margin: 0 0 20px;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
 }
 
+/* ─────────────────────────────────────────────
+   EMPTY STATE
+   ───────────────────────────────────────────── */
 .empty-state {
-  color: #6b7280;
+  color: var(--text-muted);
   text-align: center;
-  padding: 32px 0;
+  padding: 48px 0;
+  font-size: 15px;
+  font-weight: 500;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
 }
 
-.jobs-list {
+/* ─────────────────────────────────────────────
+   STATS STRIP
+   ───────────────────────────────────────────── */
+.stats {
   display: grid;
-  gap: 16px;
-}
-
-.job-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 18px;
-  background: #f9fafb;
-  transition: 0.2s ease;
-}
-
-.job-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
-}
-
-.job-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 12px;
+  margin-bottom: 24px;
 }
 
-.job-card h3 {
-  margin: 0;
-  color: #111827;
-  font-size: 18px;
-}
-
-.job-card p {
-  margin: 6px 0;
-  color: #4b5563;
-}
-
-.status-badge {
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.status-badge.applied {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.status-badge.interview {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.status-badge.offer {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.status-badge.rejected {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.job-date {
+.stats div {
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border);
+  padding: 18px 12px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-primary);
   font-size: 14px;
-  margin-top: 10px;
+  line-height: 1.4;
+  transition: background var(--transition), border-color var(--transition),
+              transform var(--transition), box-shadow var(--transition);
 }
 
-.job-notes {
-  background: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 10px;
+.stats div:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
-.delete-btn {
-  margin-top: 12px;
-  padding: 8px 14px;
-  background-color: #fee2e2;
-  color: #b91c1c;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
+/* Give the count number a bigger feel */
+.stats div span,
+.stats div strong {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent-1);
+  margin-bottom: 2px;
 }
 
-.delete-btn:hover {
-  background-color: #fecaca;
-}
-
+/* ─────────────────────────────────────────────
+   CONTROLS BAR (Search + Filter)
+   ───────────────────────────────────────────── */
 .controls {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .controls input,
 .controls select {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  transition: border-color var(--transition),
+              background var(--transition),
+              box-shadow var(--transition);
 }
 
 .controls input {
@@ -126,16 +101,234 @@
   min-width: 220px;
 }
 
-.stats {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+.controls input::placeholder {
+  color: var(--text-muted);
 }
 
-.stats div {
-  background: #f3f4f6;
-  padding: 10px 14px;
-  border-radius: 12px;
+.controls select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  min-width: 160px;
+}
+
+.controls input:focus,
+.controls select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(79, 120, 241, 0.15);
+}
+
+/* ─────────────────────────────────────────────
+   JOB LIST GRID
+   ───────────────────────────────────────────── */
+.jobs-list {
+  display: grid;
+  gap: 14px;
+}
+
+/* ─────────────────────────────────────────────
+   JOB CARD
+   ───────────────────────────────────────────── */
+.job-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  background: var(--bg-surface-2);
+  transition: background var(--transition),
+              border-color var(--transition),
+              transform var(--transition),
+              box-shadow var(--transition);
+}
+
+.job-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  background: var(--bg-surface);
+  border-color: var(--border-focus);
+}
+
+/* Left accent stripe on hover */
+.job-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent-grad);
+  opacity: 0;
+  transform: scaleY(0.5);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.job-card:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* ─── Card header ─── */
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.job-card h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.15px;
+}
+
+.job-card p {
+  margin: 5px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ─── Inline status select ─── */
+.job-card select {
+  padding: 7px 32px 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+  font-family: var(--font-body);
+  font-size: 13px;
   font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.job-card select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(79, 120, 241, 0.15);
+}
+
+/* ─────────────────────────────────────────────
+   STATUS BADGES
+   ───────────────────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-badge.applied {
+  background: rgba(79, 120, 241, 0.12);
+  color: #3b6ef0;
+  border: 1px solid rgba(79, 120, 241, 0.2);
+}
+
+.status-badge.interview {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+}
+
+.status-badge.offer {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+}
+
+.status-badge.rejected {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Dark mode badge adjustments — brighter, still readable */
+.app.dark .status-badge.applied  { color: #7da4f8; background: rgba(79,120,241,.15); border-color: rgba(79,120,241,.28); }
+.app.dark .status-badge.interview { color: #fbbf24; background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.24); }
+.app.dark .status-badge.offer     { color: #34d399; background: rgba(52,211,153,.1);  border-color: rgba(52,211,153,.22); }
+.app.dark .status-badge.rejected  { color: #f87171; background: rgba(248,113,113,.1); border-color: rgba(248,113,113,.2); }
+
+/* ─────────────────────────────────────────────
+   DATE + NOTES
+   ───────────────────────────────────────────── */
+.job-date {
+  font-size: 13px;
+  margin-top: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.job-notes {
+  background: var(--bg-surface-3);
+  padding: 13px 15px;
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+/* ─────────────────────────────────────────────
+   DELETE BUTTON
+   ───────────────────────────────────────────── */
+.delete-btn {
+  margin-top: 16px;
+  padding: 9px 16px;
+  background: transparent;
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  transition: background var(--transition),
+              border-color var(--transition),
+              transform var(--transition);
+}
+
+.delete-btn:hover {
+  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.5);
+  transform: translateY(-1px);
+}
+
+.delete-btn:active {
+  transform: translateY(0);
+}
+
+.app.dark .delete-btn {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.25);
+}
+
+.app.dark .delete-btn:hover {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.45);
 }

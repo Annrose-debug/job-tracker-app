@@ -1,27 +1,120 @@
-.job-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+/* ─────────────────────────────────────────────
+   FORM CARD WRAPPER
+   ───────────────────────────────────────────── */
+.form-card {
+  margin-bottom: 28px;
 }
 
+.form-card h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+/* ─────────────────────────────────────────────
+   FORM GRID
+   ───────────────────────────────────────────── */
+.job-form {
+  background: var(--bg-surface);
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+/* ─────────────────────────────────────────────
+   INPUTS, SELECTS, TEXTAREA
+   ───────────────────────────────────────────── */
 .job-form input,
 .job-form select,
 .job-form textarea {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  width: 100%;
+  transition: border-color var(--transition),
+              background var(--transition),
+              box-shadow var(--transition);
+}
+
+.job-form input::placeholder,
+.job-form textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.job-form input:hover,
+.job-form select:hover,
+.job-form textarea:hover {
+  border-color: var(--text-muted);
+}
+
+.job-form input:focus,
+.job-form select:focus,
+.job-form textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(79, 120, 241, 0.15);
+}
+
+/* Keep select arrow visible in dark mode */
+.job-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
 }
 
 .job-form textarea {
   grid-column: span 2;
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.6;
 }
 
-.job-form button {
+/* ─────────────────────────────────────────────
+   SUBMIT BUTTON
+   ───────────────────────────────────────────── */
+.job-form button[type="submit"],
+.job-form > button:last-child {
   grid-column: span 2;
-  padding: 10px;
-  background-color: #2563eb;
-  color: white;
+  padding: 14px 20px;
+  background: var(--accent-grad);
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
+  letter-spacing: 0.1px;
+  box-shadow: 0 4px 14px rgba(79, 120, 241, 0.35);
+  transition: opacity var(--transition),
+              transform var(--transition),
+              box-shadow var(--transition);
+}
+
+.job-form button[type="submit"]:hover,
+.job-form > button:last-child:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(79, 120, 241, 0.45);
+}
+
+.job-form button[type="submit"]:active,
+.job-form > button:last-child:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(79, 120, 241, 0.3);
 }

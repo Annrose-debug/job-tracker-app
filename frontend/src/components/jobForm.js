@@ -50,7 +50,7 @@ function JobForm({ onJobAdded }) {
 
       console.log("Success:", response.data);
 
-      // 🔥 VERY IMPORTANT: triggers refresh in JobList
+      // triggers refresh in JobList
       onJobAdded();
 
       // clears the form after successful submission
@@ -68,50 +68,54 @@ function JobForm({ onJobAdded }) {
 
   // renders the form with inputs
   return (
-    <form className="job-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="company"
-        placeholder="Company"
-        value={formData.company}
-        onChange={handleChange}
-      />
+    <div className="form-card">
+      <h2>Add a Job</h2>
 
-      <input
-        type="text"
-        name="role"
-        placeholder="Role"
-        value={formData.role}
-        onChange={handleChange}
-      />
+      <form className="job-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="company"
+          placeholder="Company"
+          value={formData.company}
+          onChange={handleChange}
+        />
 
-      <select
-        name="status"
-        value={formData.status}
-        onChange={handleChange}
-      >
-        <option>Applied</option>
-        <option>Interview</option>
-        <option>Offer</option>
-        <option>Rejected</option>
-      </select>
+        <input
+          type="text"
+          name="role"
+          placeholder="Role"
+          value={formData.role}
+          onChange={handleChange}
+        />
 
-      <input
-        type="date"
-        name="date_applied"
-        value={formData.date_applied}
-        onChange={handleChange}
-      />
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+        >
+          <option>Applied</option>
+          <option>Interview</option>
+          <option>Offer</option>
+          <option>Rejected</option>
+        </select>
 
-      <textarea
-        name="notes"
-        placeholder="Notes"
-        value={formData.notes}
-        onChange={handleChange}
-      />
+        <input
+          type="date"
+          name="date_applied"
+          value={formData.date_applied}
+          onChange={handleChange}
+        />
 
-      <button type="submit">Add Job</button>
-    </form>
+        <textarea
+          name="notes"
+          placeholder="Notes"
+          value={formData.notes}
+          onChange={handleChange}
+        />
+
+        <button type="submit">Add Job</button>
+      </form>
+    </div>
   );
 }
 

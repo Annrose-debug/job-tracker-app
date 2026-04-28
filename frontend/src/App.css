@@ -1,25 +1,489 @@
+/* ─────────────────────────────────────────────
+   GOOGLE FONTS IMPORT
+   ───────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap");
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+   ───────────────────────────────────────────── */
+:root {
+  --font-display: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --font-body:    "DM Sans", "Segoe UI", system-ui, sans-serif;
+
+  /* Light palette */
+  --bg-page:        #f0f4fb;
+  --bg-surface:     #ffffff;
+  --bg-surface-2:   #f7f9fc;
+  --bg-surface-3:   #eef2fa;
+
+  --border:         #e2e8f0;
+  --border-focus:   #4f78f1;
+
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #94a3b8;
+
+  --accent-1:       #4f78f1;
+  --accent-2:       #7c5cfc;
+  --accent-grad:    linear-gradient(135deg, #4f78f1 0%, #7c5cfc 100%);
+
+  --shadow-sm:  0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
+  --shadow-md:  0 4px 16px rgba(15,23,42,.08), 0 2px 6px rgba(15,23,42,.04);
+  --shadow-lg:  0 12px 40px rgba(15,23,42,.12), 0 4px 12px rgba(15,23,42,.06);
+
+  --radius-sm:  10px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark palette — overrides via .app.dark */
+.app.dark {
+  --bg-page:        #080e1b;
+  --bg-surface:     #0f1929;
+  --bg-surface-2:   #141f33;
+  --bg-surface-3:   #1a2740;
+
+  --border:         #1e2f4a;
+  --border-focus:   #4f78f1;
+
+  --text-primary:   #e8edf5;
+  --text-secondary: #8ba0bf;
+  --text-muted:     #4a6380;
+
+  --accent-1:       #5b84f5;
+  --accent-2:       #8b6dfc;
+  --accent-grad:    linear-gradient(135deg, #5b84f5 0%, #8b6dfc 100%);
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.25);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.35);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,.5);
+}
+
+/* ─────────────────────────────────────────────
+   RESET + BASE
+   ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fb;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* ─────────────────────────────────────────────
+   APP SHELL
+   ───────────────────────────────────────────── */
+.app {
+  min-height: 100vh;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* Subtle dot-grid texture */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─────────────────────────────────────────────
+   DASHBOARD CONTAINER
+   ───────────────────────────────────────────── */
 .app-container {
-  max-width: 900px;
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 36px 24px 60px;
 }
 
+/* ─────────────────────────────────────────────
+   HEADER
+   ───────────────────────────────────────────── */
 .header {
-  margin-bottom: 20px;
+  background: var(--accent-grad);
+  color: #fff;
+  padding: 36px 40px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  outline: 1px solid rgba(255,255,255,0.12);
+  outline-offset: -1px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative orb */
+.header::after {
+  content: "";
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  top: -120px;
+  right: -80px;
+  pointer-events: none;
 }
 
 .header h1 {
   margin: 0;
-  color: #111827;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
 }
 
 .header p {
-  color: #6b7280;
-  margin-top: 5px;
+  margin: 6px 0 0;
+  font-size: 15px;
+  opacity: 0.82;
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────────
+   HEADER ACTIONS (back + dark-mode buttons)
+   ───────────────────────────────────────────── */
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────
+   DASHBOARD TOGGLE / BACK BUTTON
+   ───────────────────────────────────────────── */
+.toggle-btn {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.25);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.toggle-btn:hover {
+  background: rgba(255,255,255,0.28);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+.toggle-btn:active {
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────
+   LANDING PAGE
+   ───────────────────────────────────────────── */
+.landing {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px 60px;
+}
+
+/* ── Nav ─────────────────────────────────────── */
+.landing-nav {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.landing-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.landing-logo-icon {
+  font-size: 22px;
+}
+
+/* Nav toggle — its own class, no conflict with .toggle-btn */
+.landing-nav-toggle {
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.landing-nav-toggle:hover {
+  background: var(--bg-surface-2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.landing-nav-toggle:active {
+  transform: translateY(0);
+}
+
+/* ── Hero ─────────────────────────────────────── */
+.landing-hero {
+  position: relative;
+  text-align: center;
+  max-width: 720px;
+  margin: 60px auto 0;
+  padding: 0 8px;
+}
+
+/* Decorative gradient blobs */
+.landing-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.landing-blob-1 {
+  width: 480px;
+  height: 480px;
+  background: rgba(79,120,241,0.14);
+  top: -160px;
+  left: 50%;
+  transform: translateX(-60%);
+}
+
+.landing-blob-2 {
+  width: 360px;
+  height: 360px;
+  background: rgba(124,92,252,0.12);
+  top: -80px;
+  right: -60px;
+}
+
+/* Badge pill */
+.landing-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Headline */
+.landing-headline {
+  font-size: clamp(38px, 6vw, 64px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -1.5px;
+  color: var(--text-primary);
+  margin: 0 0 22px;
+}
+
+/* Gradient accent — display:inline-block is required for clip to work */
+.landing-headline-accent {
+  display: inline-block;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Sub copy */
+.landing-sub {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto 36px;
+  font-weight: 400;
+}
+
+/* CTA button */
+.landing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 34px;
+  background: var(--accent-grad);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.1px;
+  box-shadow: 0 6px 24px rgba(79,120,241,0.38);
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  isolation: isolate;
+}
+
+.landing-cta:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(79,120,241,0.48);
+}
+
+.landing-cta:active {
+  transform: translateY(0);
+}
+
+.landing-cta-arrow {
+  font-size: 18px;
+  transition: transform var(--transition);
+}
+
+.landing-cta:hover .landing-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ── Feature cards ────────────────────────────── */
+.landing-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 960px;
+  margin: 72px auto 0;
+}
+
+.landing-feature-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 26px 22px;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.landing-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-focus);
+}
+
+.landing-feature-icon {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.landing-feature-card strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.landing-feature-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Footer nudge ────────────────────────────── */
+.landing-footer-note {
+  margin-top: 52px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.landing-footer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition);
+}
+
+.landing-footer-link:hover {
+  opacity: 0.75;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .landing-hero {
+    margin-top: 36px;
+  }
+
+  .landing-features {
+    grid-template-columns: 1fr 1fr;
+    margin-top: 48px;
+  }
+
+  .landing-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header {
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-actions {
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .landing-features {
+    grid-template-columns: 1fr;
+  }
 }
